@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MiniWrapped</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo_lofi.jpg') }}" />
+        </div>
+        <div class="title">
+            <h1>MiniWrapped</h1>
+            <h2>Python, Flask, Docker, Spotify API example</h2>
+        </div>
+    </header>
+    <div class="container">
+        <div>
+            <a href='/login'>&rarr; Login</a>
+        </div>
+        <div>
+            <h3>Artists</h3>
+            <ul>
+                <li>Artist 1</li>
+                <li>Artist 2</li>
+                <li>Artist 3</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Tracks</h3>
+            <ul>
+                <li>Track 1</li>
+                <li>Track 2</li>
+                <li>Track 3</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Playlists</h3>
+            <ul>
+                <li>Playlist 1</li>
+                <li>Playlist 2</li>
+                <li>Playlist 3</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

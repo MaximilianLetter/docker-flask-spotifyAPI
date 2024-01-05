@@ -7,7 +7,7 @@ import requests
 import urllib.parse
 
 from datetime import datetime, timedelta
-from flask import Flask, redirect, request, jsonify, session
+from flask import Flask, redirect, request, jsonify, session, render_template
 
 # Load environment variables from .env file
 load_dotenv()
@@ -29,7 +29,7 @@ def index():
     """
     Index page, without any route specified.
     """
-    return "Please <a href='/login'>log into Spotify</a> first."
+    return render_template('index.html')
 
 
 @app.route('/login')

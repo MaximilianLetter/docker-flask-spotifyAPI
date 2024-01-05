@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    padding: 16px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #fefefe;
+    background-color: #111;
+}
+
+a {
+    text-decoration:none;
+    font-weight: 800;
+    color: #fefefe;
+}
+
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    margin-bottom: 48px;
+}
+
+.logo img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 15%;
+}
+
+.title {
+    margin-left: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.title h1 {
+    font-size: 128px;
+    line-height: 128px;
+    margin: 0;
+}
+
+.title h2 {
+    font-size: 24px;
+    font-weight: 200;
+    margin: 0;
+    margin-left: 8px;
+}
+
