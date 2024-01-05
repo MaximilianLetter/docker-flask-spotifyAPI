@@ -37,7 +37,7 @@ def login():
     """
     Login redirecting to Spotify authorization.
     """
-    scope = 'user-read-private user-read-email'
+    scope = 'user-read-private user-read-email user-top-read'
 
     params = {
         'client_id': CLIENT_ID,
@@ -77,7 +77,7 @@ def callback():
         session['refresh_token'] = token_info['refresh_token']
         session['expires_at'] = datetime.now().timestamp() + token_info['expires_in']
 
-        return redirect('/playlists')
+        return redirect('/')
 
 
 @app.route('/playlists')
@@ -95,6 +95,30 @@ def get_playlists():
     playlists = response.json()
 
     return jsonify(playlists)
+
+
+@app.route('/tracks')
+def get_tracks():
+    """
+    Shows the top tracks of the authorized user.
+    """
+    checkAccess(session)
+    
+    topTracks = getTopItems('tracks')
+
+    return jsonify(topTracks)
+
+
+@app.route('/artists')
+def get_artists():
+    """
+    Shows the top tracks of the authorized user.
+    """
+    checkAccess(session)
+    
+    topArtists = getTopItems('artists')
+
+    return jsonify(topArtists)
 
 
 @app.route('/refresh-token')
@@ -132,6 +156,22 @@ def checkAccess(session, checkLogin = True, checkTimestamp = True):
     if checkTimestamp:
         if datetime.now().timestamp() > session['expires_at']:
             return redirect('/refresh-token')
+
+
+def getTopItems(itemType):
+    if itemType not in ['tracks', 'artists']:
+        print("type does not fit")
+        return redirect('/')
+
+    headers = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    response = requests.get(API_BASE_URL + f"me/top/{itemType}", headers=headers)
+    topItems = response.json()['items']
+
+    return topItems
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)

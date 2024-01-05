@@ -18,7 +18,7 @@
     </header>
     <div class="container">
         <div>
-            <a href='/login'>&rarr; Login</a>
+            <a href="{{ url_for('login') }}">&rarr; Login</a>
         </div>
         <div>
             <h3>Artists</h3>
@@ -26,6 +26,7 @@
                 <li>Artist 1</li>
                 <li>Artist 2</li>
                 <li>Artist 3</li>
+                <li><a href="{{ url_for('get_artists') }}">&rarr; all top artists</a></li>
             </ul>
         </div>
         <div>
@@ -34,6 +35,7 @@
                 <li>Track 1</li>
                 <li>Track 2</li>
                 <li>Track 3</li>
+                <li><a href="{{ url_for('get_tracks') }}">&rarr; all top tracks</a></li>
             </ul>
         </div>
         <div>
@@ -42,6 +44,7 @@
                 <li>Playlist 1</li>
                 <li>Playlist 2</li>
                 <li>Playlist 3</li>
+                <li><a href="{{ url_for('get_playlists') }}">&rarr; all playlists</a></li>
             </ul>
         </div>
     </div>
