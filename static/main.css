@@ -20,7 +20,7 @@ a {
     margin: 0 auto;
     padding: 16px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 header {
@@ -53,6 +53,18 @@ header {
     font-weight: 200;
     margin: 0;
     margin-left: 8px;
+}
+
+.category-box {
+    width: 33.333%;
+}
+
+.category-title {
+    font-size: 36px;
+    transform: rotate(-15deg);
+    margin: 0 0 0 0;
+    width: fit-content;
+    min-width: 160px;
 }
 
 .list-entry {

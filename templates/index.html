@@ -27,8 +27,8 @@
     </header>
 
     <div class="container">
-        <div>
-            <h3>Artists</h3>
+        <div class="category-box">
+            <h3 class="category-title">Artists</h3>
             <ul>
                 {% for artist in topArtists %}
                     <li>
@@ -46,8 +46,8 @@
                 <li><a href="{{ url_for('get_artists') }}">&rarr; all top artists</a></li>
             </ul>
         </div>
-        <div>
-            <h3>Tracks</h3>
+        <div class="category-box">
+            <h3 class="category-title">Tracks</h3>
             <ul>
                 {% for track in topTracks %}
                     <li>
@@ -64,12 +64,21 @@
                 <li><a href="{{ url_for('get_tracks') }}">&rarr; all top tracks</a></li>
             </ul>
         </div>
-        <div>
-            <h3>Playlists</h3>
+        <div class="category-box">
+            <h3 class="category-title">Playlists</h3>
             <ul>
-                <li>Playlist 1</li>
-                <li>Playlist 2</li>
-                <li>Playlist 3</li>
+                {% for playlist in playlists %}
+                    <li>
+                        <div class="list-entry">
+                            <div class="square-image">
+                                <img src="{{ playlist['img'] }}" />
+                            </div>
+                            <div class="list-title">
+                                <h3>{{ playlist['name'] }}</h3>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %} 
                 <li><a href="{{ url_for('get_playlists') }}">&rarr; all playlists</a></li>
             </ul>
         </div>

@@ -44,15 +44,23 @@ def index():
     topTracks = getTopItems('tracks', 3)
     topTracksFiltered = []
     for item in topTracks:
-        print(item)
         topTracksFiltered.append({
             "img": item['album']['images'][2]['url'],
             "name": item['name']
         })
     
+    playlistsFiltered = []
+    playlists = getPlaylists(3)['items']
+    for item in playlists:
+        playlistsFiltered.append({
+            "img": item['images'][0]['url'],
+            "name": item['name']
+        })
+
     return render_template('index.html',
         topArtists = topArtistsFiltered,
         topTracks = topTracksFiltered,
+        playlists = playlistsFiltered,
         user = loggedInUser
     )
 
@@ -112,12 +120,7 @@ def get_playlists():
     """
     checkAccess(session)
     
-    headers = {
-        'Authorization': f"Bearer {session['access_token']}"
-    }
-
-    response = requests.get(API_BASE_URL + 'me/playlists', headers=headers)
-    playlists = response.json()
+    playlists = getPlaylists()
 
     return jsonify(playlists)
 
@@ -192,6 +195,17 @@ def getUser():
     user = response.json()
 
     return user
+
+
+def getPlaylists(limit = 20):
+    headers = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    response = requests.get(API_BASE_URL + f"me/playlists?limit={limit}", headers=headers)
+    playlists = response.json()
+
+    return playlists
 
 
 def getTopItems(itemType, limit = 20):
