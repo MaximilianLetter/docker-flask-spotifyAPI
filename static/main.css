@@ -51,3 +51,23 @@ header {
     margin-left: 8px;
 }
 
+.list-entry {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.artist-image img {
+    border-radius: 50%;
+    max-width: 64px;
+    max-width: 64px;
+}
+
+.artist-title {
+    margin: auto 0 auto 12px;
+
+}
+
+.track-image img {
+    max-width: 64px;
+    max-width: 64px;
+}

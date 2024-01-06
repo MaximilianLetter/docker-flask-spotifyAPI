@@ -23,18 +23,37 @@
         <div>
             <h3>Artists</h3>
             <ul>
-                <li>Artist 1</li>
-                <li>Artist 2</li>
-                <li>Artist 3</li>
+                {% for artist in topArtists %}
+                    <li>
+                        <div class="list-entry">
+                            <div class="artist-image">
+                                <img src="{{ artist['img'] }}" />
+                            </div>
+                            <div class="artist-title">
+                                <h3>{{ artist['name'] }}</h3>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %} 
+                
                 <li><a href="{{ url_for('get_artists') }}">&rarr; all top artists</a></li>
             </ul>
         </div>
         <div>
             <h3>Tracks</h3>
             <ul>
-                <li>Track 1</li>
-                <li>Track 2</li>
-                <li>Track 3</li>
+                {% for track in topTracks %}
+                    <li>
+                        <div class="list-entry">
+                            <div class="track-image">
+                                <img src="{{ track['img'] }}" />
+                            </div>
+                            <div class="artist-title">
+                                <h3>{{ track['name'] }}</h3>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %} 
                 <li><a href="{{ url_for('get_tracks') }}">&rarr; all top tracks</a></li>
             </ul>
         </div>

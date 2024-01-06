@@ -29,7 +29,26 @@ def index():
     """
     Index page, without any route specified.
     """
-    return render_template('index.html')
+    checkAccess(session)
+    
+    topArtists = getTopItems('artists', 3)
+    topArtistsFiltered = []
+    for item in topArtists:
+        topArtistsFiltered.append({
+            "img": item['images'][2]['url'],
+            "name": item['name']
+        })
+
+    topTracks = getTopItems('tracks', 3)
+    topTracksFiltered = []
+    for item in topTracks:
+        print(item)
+        topTracksFiltered.append({
+            "img": item['album']['images'][2]['url'],
+            "name": item['name']
+        })
+    
+    return render_template('index.html', topArtists = topArtistsFiltered, topTracks = topTracksFiltered)
 
 
 @app.route('/login')
@@ -158,7 +177,7 @@ def checkAccess(session, checkLogin = True, checkTimestamp = True):
             return redirect('/refresh-token')
 
 
-def getTopItems(itemType):
+def getTopItems(itemType, limit = 20):
     if itemType not in ['tracks', 'artists']:
         print("type does not fit")
         return redirect('/')
@@ -167,7 +186,7 @@ def getTopItems(itemType):
         'Authorization': f"Bearer {session['access_token']}"
     }
 
-    response = requests.get(API_BASE_URL + f"me/top/{itemType}", headers=headers)
+    response = requests.get(API_BASE_URL + f"me/top/{itemType}?limit={limit}", headers=headers)
     topItems = response.json()['items']
 
     return topItems
