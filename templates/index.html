@@ -15,21 +15,28 @@
             <h1>MiniWrapped</h1>
             <h2>Python, Flask, Docker, Spotify API example</h2>
         </div>
-    </header>
-    <div class="container">
-        <div>
-            <a href="{{ url_for('login') }}">&rarr; Login</a>
+        <div class="user">
+            <div class="user-name">
+                <span>Logged in as</span>
+                <h3>{{ user['display_name'] }}</h3>
+            </div>
+            <div class="round-image">
+                <img src="{{ user['images'][0]['url'] }}" />
+            </div>
         </div>
+    </header>
+
+    <div class="container">
         <div>
             <h3>Artists</h3>
             <ul>
                 {% for artist in topArtists %}
                     <li>
                         <div class="list-entry">
-                            <div class="artist-image">
+                            <div class="round-image">
                                 <img src="{{ artist['img'] }}" />
                             </div>
-                            <div class="artist-title">
+                            <div class="list-title">
                                 <h3>{{ artist['name'] }}</h3>
                             </div>
                         </div>
@@ -45,10 +52,10 @@
                 {% for track in topTracks %}
                     <li>
                         <div class="list-entry">
-                            <div class="track-image">
+                            <div class="square-image">
                                 <img src="{{ track['img'] }}" />
                             </div>
-                            <div class="artist-title">
+                            <div class="list-title">
                                 <h3>{{ track['name'] }}</h3>
                             </div>
                         </div>

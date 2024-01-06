@@ -1,6 +1,5 @@
 body {
     margin: 0;
-    padding: 16px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #fefefe;
     background-color: #111;
@@ -17,13 +16,18 @@ a {
 }
 
 .container {
-    width: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
 }
 
 header {
     display: flex;
     margin-bottom: 48px;
+    padding: 16px;
+    background-color: #222;
 }
 
 .logo img {
@@ -56,18 +60,35 @@ header {
     margin-bottom: 12px;
 }
 
-.artist-image img {
+.round-image img {
     border-radius: 50%;
     max-width: 64px;
     max-width: 64px;
 }
 
-.artist-title {
+.list-title {
     margin: auto 0 auto 12px;
 
 }
 
-.track-image img {
+.square-image img {
     max-width: 64px;
     max-width: 64px;
+}
+
+.user {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    padding: 16px;
+    margin-left: auto;
+}
+
+.user-name {
+    margin: auto 12px auto 0;
+}
+
+.user-name h3 {
+    margin-top: 4px;
+    margin-bottom: 4px;
 }

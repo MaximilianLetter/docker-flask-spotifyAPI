@@ -27,9 +27,11 @@ API_BASE_URL = os.getenv('API_BASE_URL')
 @app.route('/')
 def index():
     """
-    Index page, without any route specified.
+    Index page that serves as a dashboard.
     """
     checkAccess(session)
+
+    loggedInUser = getUser()
     
     topArtists = getTopItems('artists', 3)
     topArtistsFiltered = []
@@ -48,7 +50,11 @@ def index():
             "name": item['name']
         })
     
-    return render_template('index.html', topArtists = topArtistsFiltered, topTracks = topTracksFiltered)
+    return render_template('index.html',
+        topArtists = topArtistsFiltered,
+        topTracks = topTracksFiltered,
+        user = loggedInUser
+    )
 
 
 @app.route('/login')
@@ -161,7 +167,7 @@ def refresh_token():
         session['access_token'] = new_token_info['access_token']
         session['expires_at'] = datetime.now().timestamp() + new_token_info['expires_in']
 
-        return redirect('/playlists')
+        return redirect('/')
 
 
 def checkAccess(session, checkLogin = True, checkTimestamp = True):
@@ -175,6 +181,17 @@ def checkAccess(session, checkLogin = True, checkTimestamp = True):
     if checkTimestamp:
         if datetime.now().timestamp() > session['expires_at']:
             return redirect('/refresh-token')
+
+
+def getUser():    
+    headers = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    response = requests.get(API_BASE_URL + 'me', headers=headers)
+    user = response.json()
+
+    return user
 
 
 def getTopItems(itemType, limit = 20):
