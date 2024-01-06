@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MiniWrapped</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon//favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon//favicon-16x16.png') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo_lofi.jpg') }}" />
+        </div>
+        <div class="title">
+            <h1>MiniWrapped</h1>
+            <h2>Python, Flask, Docker, Spotify API example</h2>
+        </div>
+        <div class="user">
+            <div class="user-name">
+                <span>Logged in as</span>
+                <h3>{{ user['display_name'] }}</h3>
+            </div>
+            <div class="round-image">
+                <img src="{{ user['images'][0]['url'] }}" />
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="category-box">
+            <h3 class="category-title">Artists</h3>
+            <ul>
+                {% for artist in topArtists %}
+                    <li>
+                        <div class="list-entry">
+                            <div class="round-image">
+                                <img src="{{ artist['img'] }}" />
+                            </div>
+                            <div class="list-title">
+                                <h3>{{ artist['name'] }}</h3>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %} 
+                
+                <li><a href="{{ url_for('get_artists') }}">&rarr; all top artists</a></li>
+            </ul>
+        </div>
+        <div class="category-box">
+            <h3 class="category-title">Tracks</h3>
+            <ul>
+                {% for track in topTracks %}
+                    <li>
+                        <div class="list-entry">
+                            <div class="square-image">
+                                <img src="{{ track['img'] }}" />
+                            </div>
+                            <div class="list-title">
+                                <h3>{{ track['name'] }}</h3>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %} 
+                <li><a href="{{ url_for('get_tracks') }}">&rarr; all top tracks</a></li>
+            </ul>
+        </div>
+        <div class="category-box">
+            <h3 class="category-title">Playlists</h3>
+            <ul>
+                {% for playlist in playlists %}
+                    <li>
+                        <div class="list-entry">
+                            <div class="square-image">
+                                <img src="{{ playlist['img'] }}" />
+                            </div>
+                            <div class="list-title">
+                                <h3>{{ playlist['name'] }}</h3>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %} 
+                <li><a href="{{ url_for('get_playlists') }}">&rarr; all playlists</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <span>Utilizes SpotifyAPI and the cookies required for authorization.</span>
+        <span>&copy; 2024 by <a href="https://maximilianletter.com/">Maximilian Letter</a></span>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #fefefe;
+    background-color: #111;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    display: flex;
+    padding: 16px;
+    background-color: #222;
+    color: #666;
+    margin-top: auto;
+    justify-content: space-between;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration:none;
+    font-weight: 600;
+    color: #fefefe;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+header {
+    display: flex;
+    margin-bottom: 48px;
+    padding: 16px;
+    background-color: #222;
+}
+
+.logo img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 15%;
+}
+
+.title {
+    margin-left: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.title h1 {
+    font-size: 128px;
+    line-height: 128px;
+    margin: 0;
+}
+
+.title h2 {
+    font-size: 24px;
+    font-weight: 200;
+    margin: 0;
+    margin-left: 8px;
+}
+
+.category-box {
+    width: 33.333%;
+}
+
+.category-title {
+    font-size: 36px;
+    transform: rotate(-15deg);
+    margin: 0 0 0 0;
+    width: fit-content;
+    min-width: 160px;
+}
+
+.list-entry {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.round-image img {
+    border-radius: 50%;
+    max-width: 64px;
+    max-width: 64px;
+}
+
+.list-title {
+    margin: auto 0 auto 12px;
+
+}
+
+.square-image img {
+    max-width: 64px;
+    max-width: 64px;
+}
+
+.user {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    padding: 16px;
+    margin-left: auto;
+}
+
+.user-name {
+    margin: auto 12px auto 0;
+}
+
+.user-name h3 {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}

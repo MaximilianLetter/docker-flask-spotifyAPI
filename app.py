@@ -7,7 +7,7 @@ import requests
 import urllib.parse
 
 from datetime import datetime, timedelta
-from flask import Flask, redirect, request, jsonify, session
+from flask import Flask, redirect, request, jsonify, session, render_template
 
 # Load environment variables from .env file
 load_dotenv()
@@ -27,9 +27,42 @@ API_BASE_URL = os.getenv('API_BASE_URL')
 @app.route('/')
 def index():
     """
-    Index page, without any route specified.
+    Index page that serves as a dashboard.
     """
-    return "Please <a href='/login'>log into Spotify</a> first."
+    checkAccess(session)
+
+    loggedInUser = getUser()
+    
+    topArtists = getTopItems('artists', 3)
+    topArtistsFiltered = []
+    for item in topArtists:
+        topArtistsFiltered.append({
+            "img": item['images'][2]['url'],
+            "name": item['name']
+        })
+
+    topTracks = getTopItems('tracks', 3)
+    topTracksFiltered = []
+    for item in topTracks:
+        topTracksFiltered.append({
+            "img": item['album']['images'][2]['url'],
+            "name": item['name']
+        })
+    
+    playlistsFiltered = []
+    playlists = getPlaylists(3)['items']
+    for item in playlists:
+        playlistsFiltered.append({
+            "img": item['images'][0]['url'],
+            "name": item['name']
+        })
+
+    return render_template('index.html',
+        topArtists = topArtistsFiltered,
+        topTracks = topTracksFiltered,
+        playlists = playlistsFiltered,
+        user = loggedInUser
+    )
 
 
 @app.route('/login')
@@ -37,7 +70,7 @@ def login():
     """
     Login redirecting to Spotify authorization.
     """
-    scope = 'user-read-private user-read-email'
+    scope = 'user-read-private user-read-email user-top-read'
 
     params = {
         'client_id': CLIENT_ID,
@@ -77,7 +110,7 @@ def callback():
         session['refresh_token'] = token_info['refresh_token']
         session['expires_at'] = datetime.now().timestamp() + token_info['expires_in']
 
-        return redirect('/playlists')
+        return redirect('/')
 
 
 @app.route('/playlists')
@@ -87,14 +120,33 @@ def get_playlists():
     """
     checkAccess(session)
     
-    headers = {
-        'Authorization': f"Bearer {session['access_token']}"
-    }
-
-    response = requests.get(API_BASE_URL + 'me/playlists', headers=headers)
-    playlists = response.json()
+    playlists = getPlaylists()
 
     return jsonify(playlists)
+
+
+@app.route('/tracks')
+def get_tracks():
+    """
+    Shows the top tracks of the authorized user.
+    """
+    checkAccess(session)
+    
+    topTracks = getTopItems('tracks')
+
+    return jsonify(topTracks)
+
+
+@app.route('/artists')
+def get_artists():
+    """
+    Shows the top tracks of the authorized user.
+    """
+    checkAccess(session)
+    
+    topArtists = getTopItems('artists')
+
+    return jsonify(topArtists)
 
 
 @app.route('/refresh-token')
@@ -118,7 +170,7 @@ def refresh_token():
         session['access_token'] = new_token_info['access_token']
         session['expires_at'] = datetime.now().timestamp() + new_token_info['expires_in']
 
-        return redirect('/playlists')
+        return redirect('/')
 
 
 def checkAccess(session, checkLogin = True, checkTimestamp = True):
@@ -132,6 +184,44 @@ def checkAccess(session, checkLogin = True, checkTimestamp = True):
     if checkTimestamp:
         if datetime.now().timestamp() > session['expires_at']:
             return redirect('/refresh-token')
+
+
+def getUser():    
+    headers = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    response = requests.get(API_BASE_URL + 'me', headers=headers)
+    user = response.json()
+
+    return user
+
+
+def getPlaylists(limit = 20):
+    headers = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    response = requests.get(API_BASE_URL + f"me/playlists?limit={limit}", headers=headers)
+    playlists = response.json()
+
+    return playlists
+
+
+def getTopItems(itemType, limit = 20):
+    if itemType not in ['tracks', 'artists']:
+        print("type does not fit")
+        return redirect('/')
+
+    headers = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    response = requests.get(API_BASE_URL + f"me/top/{itemType}?limit={limit}", headers=headers)
+    topItems = response.json()['items']
+
+    return topItems
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
