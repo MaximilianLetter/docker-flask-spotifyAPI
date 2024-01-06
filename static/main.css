@@ -3,6 +3,18 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #fefefe;
     background-color: #111;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    display: flex;
+    padding: 16px;
+    background-color: #222;
+    color: #666;
+    margin-top: auto;
+    justify-content: space-between;
 }
 
 li {
@@ -11,11 +23,12 @@ li {
 
 a {
     text-decoration:none;
-    font-weight: 800;
+    font-weight: 600;
     color: #fefefe;
 }
 
 .container {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 16px;
