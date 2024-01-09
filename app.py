@@ -168,7 +168,7 @@ def refresh_token():
     
     if datetime.now().timestamp() > session['expires_at']:
         req_body = {
-            'grant_type': 'referesh_token',
+            'grant_type': 'refresh_token',
             'refresh_token': session['refresh_token'],
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET
