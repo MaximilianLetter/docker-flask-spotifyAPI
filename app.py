@@ -223,7 +223,7 @@ def getPlaylists(limit = 20):
 def getTopItems(itemType, limit = 20):
     if itemType not in ['tracks', 'artists']:
         print("type does not fit")
-        return redirect('/')
+        return []
 
     headers = {
         'Authorization': f"Bearer {session['access_token']}"
