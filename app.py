@@ -29,7 +29,9 @@ def index():
     """
     Index page that serves as a dashboard.
     """
-    checkAccess(session)
+    access_redirect = checkAccess(session)
+    if access_redirect:
+        return access_redirect
 
     loggedInUser = getUser()
     
@@ -118,7 +120,9 @@ def get_playlists():
     """
     Shows the playlist of the authorized user.
     """
-    checkAccess(session)
+    access_redirect = checkAccess(session)
+    if access_redirect:
+        return access_redirect
     
     playlists = getPlaylists()
 
@@ -130,7 +134,9 @@ def get_tracks():
     """
     Shows the top tracks of the authorized user.
     """
-    checkAccess(session)
+    access_redirect = checkAccess(session)
+    if access_redirect:
+        return access_redirect
     
     topTracks = getTopItems('tracks')
 
@@ -142,7 +148,9 @@ def get_artists():
     """
     Shows the top tracks of the authorized user.
     """
-    checkAccess(session)
+    access_redirect = checkAccess(session)
+    if access_redirect:
+        return access_redirect
     
     topArtists = getTopItems('artists')
 
@@ -154,7 +162,9 @@ def refresh_token():
     """
     Refreshes the token given by Spotify if necessary.
     """
-    checkAccess(session, True, False)
+    access_redirect = checkAccess(session, True, False)
+    if access_redirect:
+        return access_redirect
     
     if datetime.now().timestamp() > session['expires_at']:
         req_body = {
@@ -184,6 +194,8 @@ def checkAccess(session, checkLogin = True, checkTimestamp = True):
     if checkTimestamp:
         if datetime.now().timestamp() > session['expires_at']:
             return redirect('/refresh-token')
+        
+    return None
 
 
 def getUser():    
