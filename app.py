@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 import requests
 import urllib.parse
+import urllib.request
 
 from datetime import datetime, timedelta
 from flask import Flask, redirect, request, jsonify, session, render_template
@@ -14,15 +15,23 @@ load_dotenv()
 
 # Setup Flask app
 app = Flask(__name__)
-app.secret_key = os.getenv('FLASK_SECRET')
+app.secret_key = os.environ['FLASK_SECRET']
 
-CLIENT_ID = os.getenv('CLIENT_ID')
-CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-REDIRECT_URI = os.getenv('REDIRECT_URI')
+CLIENT_ID = os.environ['CLIENT_ID']
+CLIENT_SECRET = os.environ['CLIENT_SECRET']
+# REDIRECT_URI = os.environ['REDIRECT_URI']
 
-AUTH_URL = os.getenv('AUTH_URL')
-TOKEN_URL = os.getenv('TOKEN_URL')
-API_BASE_URL = os.getenv('API_BASE_URL')
+if (os.environ['RUNNING_ON'] == 'local_dev'):
+    REDIRECT_URI = REDIRECT_URI = os.environ['REDIRECT_URI']
+    # redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A5000%252Fcallback
+else:
+    external_ip = urllib.request.urlopen('http://api.ipify.org/').read().decode('utf8')
+    REDIRECT_URI = 'http://' + external_ip + ':5000/callback'
+    # redirect_uri=130.162.254.10%2Fcallback
+
+AUTH_URL = os.environ['AUTH_URL']
+TOKEN_URL = os.environ['TOKEN_URL']
+API_BASE_URL = os.environ['API_BASE_URL']
 
 @app.route('/')
 def index():
