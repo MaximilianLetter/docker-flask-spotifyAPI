@@ -22,7 +22,7 @@ CLIENT_SECRET = os.environ['CLIENT_SECRET']
 # REDIRECT_URI = os.environ['REDIRECT_URI']
 
 if (os.environ['RUNNING_ON'] == 'local_dev'):
-    REDIRECT_URI = REDIRECT_URI = os.environ['REDIRECT_URI']
+    REDIRECT_URI = os.environ['REDIRECT_URI']
     # redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A5000%252Fcallback
 else:
     external_ip = urllib.request.urlopen('http://api.ipify.org/').read().decode('utf8')
